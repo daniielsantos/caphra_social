@@ -21,7 +21,7 @@ function ProfileSidebar(user: User) {
 }
 
 const Home: React.FC = () => {
-  const githubUser = 'peas'
+  const githubUser = 'nothin04'
   const pessoasFavoritas = [
     'juunegreiros',
     'omariosouto',
