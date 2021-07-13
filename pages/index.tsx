@@ -101,23 +101,9 @@ const Home: React.FC = () => {
                   type="text"
                 />
               </div>
-
-              <div>
-                <label htmlFor="url" className="subTitle">Seleciona um imagem </label>
-                <select name="image" id="imagens">
-                  {urls.map((item, index) => {                    
-                    return <option 
-                      key={index} 
-                      value={`https://picsum.photos/300/300?${index}`}
-                      >Imagem {index}
-                    </option>
-                  })}
-                </select>
-                {/* <input 
-                  placeholder="Coloque uma URL para usarmos de capa" 
-                  name="image" 
-                  aria-label="Coloque uma URL para usarmos de capa"                  
-                /> */}
+              
+              <div>                
+                <input key={new Date().toISOString()} type="hidden" name="image" value={`https://picsum.photos/300/300?${new Date().toISOString()}`}/>
               </div>
 
               <button>
