@@ -117,7 +117,7 @@ const Home: React.FC = () => {
           <h2 className="smallTitle">
               Amigos ({comunidades.length})
           </h2>
-          <ul>
+          <ul>            
                 {comunidades.map((item: Comunidade, index: number) => {
                   return (                                      
                     index <= 5 && <li key={item.id}>
