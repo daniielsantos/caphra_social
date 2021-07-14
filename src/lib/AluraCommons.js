@@ -170,6 +170,7 @@ AlurakutMenu.Logo = styled.img`
   padding: 9px 14px;
   border-radius: 1000px;
   height: 34px;
+  line-height: 90px;
 `;
 
 function AlurakutMenuProfileSidebar({ githubUser }) {

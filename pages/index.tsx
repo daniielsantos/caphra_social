@@ -77,7 +77,7 @@ const Home: React.FC = () => {
         <div className="welcomeArea" style={{gridArea: 'welcomeArea'}}>
           <Box>
             <h1 className="title">
-              Bem vindo(a)
+              Bem vindo(a) {githubUser}
             </h1>
             <OrkutNostalgicIconSet />
           </Box>
