@@ -182,7 +182,7 @@ const Home: React.FC = () => {
         <ProfileRealationBox title={"Seguidores"} items={seguidores}/>
         <ProfileRelationsBoxWrapper>
           <h2 className="smallTitle">
-              Amigos ({comunidades.length})
+              Comunidades ({comunidades.length})
           </h2>
           <ul>            
                 {comunidades.map((item: Comunidade, index: number) => {
