@@ -14,7 +14,7 @@ export default async function recebedorDeRequest(req, res) {
       // imageUrl: 'https://github.com/daniielsantos.png',
       // creatorSlug: 'daniielsantos'
     })
-    console.log(TOKEN)
+    // console.log(TOKEN)
   
     res.json({
       dados: 'Algum dado qualquer',

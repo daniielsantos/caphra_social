@@ -72,12 +72,12 @@ const Home: React.FC = () => {
   
   const pessoasFavoritas = [
     'juunegreiros',
+    'daniielsantos',
     'omariosouto',
     'peas',
     'rafaballerini',
     'marcobrunodev',
     'felipefialho',
-    'felipefialho'
   ]
 
   var urls = [];  
@@ -143,7 +143,6 @@ const Home: React.FC = () => {
                 imageUrl: dadosDoForm.get('image') as string,
                 creatorSlug: githubUser
               }
-
               fetch('/api/comunidades', {
                 method: 'POST',
                 headers: {
@@ -156,8 +155,6 @@ const Home: React.FC = () => {
                 const comunidade = dados.registroCriado
                 setComunidades([...comunidades,comunidade])              
               })
-
-
             }}>
               <div>
                 <input 
@@ -175,6 +172,47 @@ const Home: React.FC = () => {
               <button>
                 Criar comunidade
               </button>
+            </form>
+          </Box>
+          <Box>
+            <h1 className="subTitle">Mandar mensagem para amigo</h1>
+            <form onSubmit={(e) => {
+              e.preventDefault()
+              const dadosForm = new FormData(e.currentTarget)
+              const mensagem = {
+                name: dadosForm.get('nome'),
+                message: dadosForm.get('mensagem'),
+                user: dadosForm.get('users'),
+                sent_date: new Date().toISOString()
+              }
+              fetch('/api/mensagens', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(mensagem)
+              })
+              .then(async (res) => {
+                const dados = await res.json()
+                if (res.status === 200){
+                  alert(`Mensagem enviada com sucesso para: ${dados.data.user}`)
+                }
+              })
+              .catch(error => console.log('deu ruim ', error))
+            }}>
+              <input type="text" name="nome" placeholder="Digite seu nome" required/>
+              <input type="text" name="mensagem" placeholder="Digitem a mensagem" required/>
+              Para: <select name="users" key='9128'>
+              {pessoasFavoritas.map((item, index) => {
+                return (
+                  <option value={item} key={new Date().toISOString()+index}>{item}</option>
+                  )
+                })}
+                </select>
+                
+                <br/>
+                <br/>
+              <button>Enviar</button>
             </form>
           </Box>
         </div>
