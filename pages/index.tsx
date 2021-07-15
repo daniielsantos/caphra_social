@@ -5,16 +5,15 @@ import Box from '../src/components/Box'
 import { AlurakutMenu, AlurakutProfileSidebarMenuDefault, OrkutNostalgicIconSet } from '../src/lib/AluraCommons'
 import { ProfileRelationsBoxWrapper } from '../src/components/ProfileRelations'
 
-
+const TOKEN = '20bdc200470d537286ea4281b283d1'
 
 interface User {
   githubUser: string
 }
 
 interface Comunidade {
-  id: string
-  titulo: string
-  imagem: string
+  title: string
+  imageUrl: string
 }
 
 function ProfileSidebar(user: User) {  
@@ -68,12 +67,7 @@ const Home: React.FC = () => {
   
   const githubUser = 'daniielsantos'
   const [seguidores, setSeguidores] = useState([])
-  const [comunidades, setComunidades] = useState<Comunidade[]>([
-    {
-      id: new Date().toISOString(),
-      titulo:'Eu odeio acordar cedo',
-      imagem: 'https://alurakut.vercel.app/capa-comunidade-01.jpg'
-    }])
+  const [comunidades, setComunidades] = useState<Comunidade[]>([])
   
   
   const pessoasFavoritas = [
@@ -93,13 +87,35 @@ const Home: React.FC = () => {
 
   
   useEffect(() => {
+    
     fetch('https://api.github.com/users/peas/followers')
     .then((chunk) => {
         return chunk.json()
     })
     .then((result) => {
-      console.log(result)
       setSeguidores(result)
+    })
+    // API GaphQL
+    fetch('https://graphql.datocms.com/', {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${TOKEN}`,
+      },
+      body: JSON.stringify({
+        query: `{ allCommunities { 
+          title
+          id
+          imageUrl
+          creatorSlug
+        }}`
+      })
+    })
+    .then((res) => res.json())
+    .then((response) => {
+      const comunidadesDato = response.data.allCommunities
+      setComunidades(comunidadesDato)
     })
   },[])
 
@@ -122,12 +138,26 @@ const Home: React.FC = () => {
             <form onSubmit={function handlerCriarComunidade(e) {
               e.preventDefault()
               const dadosDoForm = new FormData(e.currentTarget)
-              const comunidade = {
-                id: new Date().toISOString() as string,
-                titulo: dadosDoForm.get('title') as string,
-                imagem: dadosDoForm.get('image') as string
+              const comunidade = {                
+                title: dadosDoForm.get('title') as string,
+                imageUrl: dadosDoForm.get('image') as string,
+                creatorSlug: githubUser
               }
-              setComunidades([...comunidades,comunidade])              
+
+              fetch('/api/comunidades', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(comunidade)
+              })
+              .then(async (res) => {
+                const dados = await res.json()
+                const comunidade = dados.registroCriado
+                setComunidades([...comunidades,comunidade])              
+              })
+
+
             }}>
               <div>
                 <input 
@@ -157,13 +187,13 @@ const Home: React.FC = () => {
           <ul>            
                 {comunidades.map((item: Comunidade, index: number) => {
                   return (                                      
-                    index <= 5 && <li key={item.id}>
-                      <a href={`/users/${item.titulo}`}>
+                    index <= 5 && <li key={item.imageUrl}>
+                      <a href={`/communities/${item.title}`}>
                         <img 
-                          src={item.imagem}
+                          src={item.imageUrl}
                           alt="oi"                          
                         />
-                        <span>{item.titulo}</span>
+                        <span>{item.title}</span>
                       </a>
                     </li>
                   )
