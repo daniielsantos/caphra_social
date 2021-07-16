@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken'
 
 export default async function loginAuth(req, res) {
   if (req.method === 'POST') {  
-    console.log('entrou post ')
+    
     const { githubUser } = req.body
     // const githubUser = 'asdasdasdasdalskdj'
 
@@ -18,7 +18,7 @@ export default async function loginAuth(req, res) {
     if (user.login) {
       const token = jwt.sign({
         githubUser: user.login
-      }, 'daniielsantos', { expiresIn: '2m' });
+      }, 'daniielsantos', { expiresIn: '1m' });
             
       res.json({
         token: token
