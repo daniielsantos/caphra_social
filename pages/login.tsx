@@ -35,7 +35,7 @@ export default function LoginScreen() {
                     const dadosDaResposta = await respostaDoServer.json()
                   
                     const token = dadosDaResposta.token;
-                    if (token.lenght > 1) {
+                    if (token) {
                       setUserstatus(true)
                       nookies.set(null, 'USER_TOKEN', token, {
                           path: '/',
