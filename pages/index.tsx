@@ -180,7 +180,7 @@ const Home: React.FC = () => {
               e.preventDefault()
               const dadosForm = new FormData(e.currentTarget)
               const mensagem = {
-                name: dadosForm.get('nome'),
+                name: githubUser,
                 message: dadosForm.get('mensagem'),
                 user: dadosForm.get('users'),
                 sent_date: new Date().toISOString()
@@ -200,7 +200,7 @@ const Home: React.FC = () => {
               })
               .catch(error => console.log('deu ruim ', error))
             }}>
-              <input type="text" name="nome" placeholder="Digite seu nome" required/>
+              {/* <input type="text" name="nome" placeholder="Digite seu nome" required/> */}
               <input type="text" name="mensagem" placeholder="Digite uma mensagem" required/>
               Para: <select name="users" key='9128'>
               {pessoasFavoritas.map((item, index) => {
