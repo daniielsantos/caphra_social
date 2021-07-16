@@ -17,8 +17,9 @@ export default async function loginAuth(req, res) {
 
     if (user.login) {
       const token = jwt.sign({
-        githubUser: user.login
-      }, 'daniielsantos', { expiresIn: '1m' });
+        githubUser: user.login,
+        name: user.name
+      }, 'daniielsantos', { expiresIn: '120m' });
             
       res.json({
         token: token
