@@ -2,7 +2,7 @@
 # Orkut Caphra
 
 
-## Login com autenticação utilizando usuário do Github
+### Login com Authorization utilizando usuário do Github
 
 ![image](https://user-images.githubusercontent.com/62854368/125998654-15baefe2-41eb-40e3-b1d1-a27c33684782.png)
 
