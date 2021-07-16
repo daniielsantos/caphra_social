@@ -10,12 +10,16 @@
   },
   "dependencies": {
     "datocms-client": "^3.4.11",
+    "jsonwebtoken": "^8.5.1",
     "next": "11.0.1",
+    "nookies": "^2.5.2",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "styled-components": "^5.3.0"
   },
   "devDependencies": {
+    "@types/jsonwebtoken": "^8.5.4",
+    "@types/nookies": "^2.0.3",
     "@types/react": "17.0.14",
     "@types/styled-components": "^5.1.11",
     "babel-plugin-styled-components": "^1.13.2",

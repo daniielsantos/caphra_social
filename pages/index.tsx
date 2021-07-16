@@ -1,12 +1,14 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { useEffect, useState } from 'react'
+import nookies from 'nookies'
+import jwt from 'jsonwebtoken'
 import MainGrid from '../src/components/MainGrid'
 import Box from '../src/components/Box'
 import { AlurakutMenu, AlurakutProfileSidebarMenuDefault, OrkutNostalgicIconSet } from '../src/lib/AluraCommons'
 import { ProfileRelationsBoxWrapper } from '../src/components/ProfileRelations'
 
 const TOKEN = '20bdc200470d537286ea4281b283d1'
-
+const PROD_URL = 'https://alurakut-nine-murex.vercel.app'
 interface User {
   githubUser: string
 }
@@ -63,9 +65,10 @@ function ProfileRealationBox(props: any) {
 
 
 
-const Home: React.FC = () => {
+const Home = (props: any) => {
   
-  const githubUser = 'daniielsantos'
+  const githubUser = props.githubUser
+  
   const [seguidores, setSeguidores] = useState([])
   const [comunidades, setComunidades] = useState<Comunidade[]>([])
   
@@ -265,4 +268,39 @@ const Home: React.FC = () => {
   )
 }
 
+
+export async function getServerSideProps(context: any) {
+  const cookies = nookies.get(context)
+  const token = cookies.USER_TOKEN
+
+  const { isAuthenticated }  = await fetch('http://localhost:3000/api/auth', {
+    headers: {
+      Authorization: token
+    }
+  })
+  .then((response)=> response.json())
+
+  if (!isAuthenticated) {
+    
+    nookies.destroy(context,'USER_TOKEN')
+    
+    return {
+      redirect: {
+        destination: '/login',
+        permanent: false
+      }
+    }
+  }
+
+  // https://alurakut-nine-murex.vercel.app/
+
+  const  user: any = jwt.decode(token)  
+  const { githubUser } = user
+
+  return {
+    props: {
+      githubUser: githubUser
+    }
+  }
+}
 export default Home
