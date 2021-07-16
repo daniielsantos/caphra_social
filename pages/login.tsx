@@ -32,7 +32,7 @@ export default function LoginScreen() {
                     body: JSON.stringify({ githubUser: githubUser })
                 })
                 .then(async (respostaDoServer) => {
-                  const dadosDaResposta = await respostaDoServer.json()
+                    const dadosDaResposta = await respostaDoServer.json()
                   
                     const token = dadosDaResposta.token;
                     nookies.set(null, 'USER_TOKEN', token, {
