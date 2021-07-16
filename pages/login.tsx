@@ -4,8 +4,11 @@ import React from 'react';
 // Hook do NextJS
 import { useRouter } from 'next/router';
 import nookies from 'nookies';
+import jwt from 'jsonwebtoken'
 
-export default function LoginScreen() {
+
+export default function LoginScreen(props: any) {
+  
   const router = useRouter();
   const [githubUser, setGithubUser] = React.useState('');
   const [userStatus, setUserstatus] = React.useState(true)
@@ -90,4 +93,21 @@ export default function LoginScreen() {
       </div>
     </main>
   )
-} 
+}
+
+export async function getServerSideProps(context: any) {
+  const cookies = nookies.get(context)
+  const token = cookies.USER_TOKEN
+  
+  
+  if (token) {
+    nookies.destroy(context, 'USER_TOKEN')
+  }
+
+  // const  user: any = jwt.decode(token) ?? { githubUser : ''}
+  // const { githubUser } = user
+
+  return {
+    props: {}
+  }
+}
