@@ -274,7 +274,7 @@ export async function getServerSideProps(context: any) {
   const cookies = nookies.get(context)
   const token = cookies.USER_TOKEN
     
-  const { isAuthenticated }  = await fetch(`http://localhost:3000/api/auth`, {
+  const { isAuthenticated }  = await fetch(`${PROD_URL}/api/auth`, {
     headers: {
       Authorization: token
     }
