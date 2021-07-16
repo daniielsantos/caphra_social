@@ -8,7 +8,7 @@ import nookies from 'nookies';
 export default function LoginScreen() {
   const router = useRouter();
   const [githubUser, setGithubUser] = React.useState('daniielsantos');
-
+  const [userStatus, setUserstatus] = React.useState(true)
   return (
     <main style={{ display: 'flex', flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       <div className="loginScreen">
@@ -35,27 +35,36 @@ export default function LoginScreen() {
                     const dadosDaResposta = await respostaDoServer.json()
                   
                     const token = dadosDaResposta.token;
-                    nookies.set(null, 'USER_TOKEN', token, {
-                        path: '/',
-                        maxAge: 86400 * 7 
-                    })
-                    router.push('/')
+                    if (token.lenght > 1) {
+                      setUserstatus(true)
+                      nookies.set(null, 'USER_TOKEN', token, {
+                          path: '/',
+                          maxAge: 86400 * 7 
+                      })
+                      router.push('/')
+                    } else {
+                      setUserstatus(false)
+                    }
                 })
           }}>
-            <p>
+          <p>
               Acesse agora mesmo com seu usuário do <strong>GitHub</strong>!
           </p>
             <input
                 placeholder="Usuário"
                 value={githubUser}
-                onChange={(evento) => {                  
+                onChange={(evento) => {
+                    setUserstatus(true)
                     setGithubUser(evento.target.value)
                 }}
             />
+            
             {githubUser.length === 0
                 ? 'Preencha o campo'
                 : ''
             }
+            {userStatus === false && 'Usuário não encontrado'}
+            <br/>           
             <button type="submit">
               Login
             </button>

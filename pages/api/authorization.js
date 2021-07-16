@@ -32,7 +32,9 @@ export default async function loginAuth(req, res) {
     }
 
 
-    return
+    return res.json({
+      token: ''
+    })
   }
   res.status(404).json({
     message: 'Não temos get'

@@ -272,7 +272,7 @@ const Home = (props: any) => {
 export async function getServerSideProps(context: any) {
   const cookies = nookies.get(context)
   const token = cookies.USER_TOKEN
-
+    
   const { isAuthenticated }  = await fetch(`${PROD_URL}/api/auth`, {
     headers: {
       Authorization: token
@@ -291,7 +291,7 @@ export async function getServerSideProps(context: any) {
       }
     }
   }
-
+    
   // https://alurakut-nine-murex.vercel.app/
 
   const  user: any = jwt.decode(token)  
