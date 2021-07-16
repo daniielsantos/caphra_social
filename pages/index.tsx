@@ -273,7 +273,7 @@ export async function getServerSideProps(context: any) {
   const cookies = nookies.get(context)
   const token = cookies.USER_TOKEN
     
-  const { isAuthenticated }  = await fetch(`${PROD_URL}/api/auth`, {
+  const { isAuthenticated }  = await fetch(`http://localhost:3000/api/auth`, {
     headers: {
       Authorization: token
     }
@@ -282,7 +282,7 @@ export async function getServerSideProps(context: any) {
 
   if (!isAuthenticated) {
     
-    nookies.destroy(context,'USER_TOKEN')
+    // nookies.destroy(context,'USER_TOKEN')
     
     return {
       redirect: {

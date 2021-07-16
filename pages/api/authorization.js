@@ -2,8 +2,8 @@ import jwt from 'jsonwebtoken'
 
 
 export default async function loginAuth(req, res) {
-
   if (req.method === 'POST') {  
+    console.log('entrou post ')
     const { githubUser } = req.body
     // const githubUser = 'asdasdasdasdalskdj'
 
@@ -12,16 +12,10 @@ export default async function loginAuth(req, res) {
         'Content-Type': 'application/json'
       }
     })
-    .then(async (result) => {
-      if (result.status !== 200) {
-        console.log('usuario não encontrado')
-        return 
-      }
-      return await result.json()
-    })
+    .then((result) => result.json())
     .catch(error => console.log('error', error))
 
-    if (user) {
+    if (user.login) {
       const token = jwt.sign({
         githubUser: user.login
       }, 'daniielsantos', { expiresIn: '2m' });
@@ -29,15 +23,9 @@ export default async function loginAuth(req, res) {
       res.json({
         token: token
       })
+
+    } else {
+      return res.status(404).json({ message: 'usuário não encontrado'})
     }
-
-
-    return res.json({
-      token: ''
-    })
   }
-  res.status(404).json({
-    message: 'Não temos get'
-  })
-
 }
