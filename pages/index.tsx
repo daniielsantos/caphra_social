@@ -16,6 +16,7 @@ interface User {
 }
 
 interface Comunidade {
+  id?: string
   title: string
   imageUrl: string
 }
@@ -234,7 +235,7 @@ const Home = (props: any) => {
                 {comunidades.map((item: Comunidade, index: number) => {
                   return (                                      
                     index <= 5 && <li key={item.imageUrl}>                      
-                      <Link href={`/communities/${item.title}`}>
+                      <Link href={`/communities/${item.id}`}>
                         <a>
                           <img 
                             src={item.imageUrl}
