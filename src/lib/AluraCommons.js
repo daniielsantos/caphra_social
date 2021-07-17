@@ -195,38 +195,41 @@ function AlurakutMenuProfileSidebar({ githubUser }) {
 // ================================================================================================================
 // AlurakutProfileSidebarMenuDefault
 // ================================================================================================================
-export function AlurakutProfileSidebarMenuDefault() {
+export function AlurakutProfileSidebarMenuDefault(props) {
+  
+  const username = props.username
   return (
     <AlurakutProfileSidebarMenuDefault.Wrapper>
-      <nav>
-        <a href="/">
-          <img src={`${BASE_URL}/icons/user.svg`} />
-            Perfil
-          </a>
-        <a href="/">
-          <img src={`${BASE_URL}/icons/book.svg`} />
+        <Link href={`/`}>          
+            <img src={`${BASE_URL}/icons/user.svg`} />
+              Perfil          
+        </Link>
+
+        <Link href={`/messages/${username}`}>
+            <img src={`${BASE_URL}/icons/book.svg`} />
             Recados
-          </a>
-        <a href="/">
-          <img src={`${BASE_URL}/icons/camera.svg`} />
-            Fotos
-          </a>
-        <a href="/">
-          <img src={`${BASE_URL}/icons/sun.svg`} />
-            Depoimentos
-          </a>
-      </nav>
-      <hr />
-      <nav>
-        <a href="/">
-          <img src={`${BASE_URL}/icons/plus.svg`} />
-            GitHub Trends
-          </a>
-        <a href="/logout">
-          <img src={`${BASE_URL}//icons/logout.svg`} />
-            Sair
-          </a>
-      </nav>
+        </Link>
+
+        <Link href={`/`}>
+            <img src={`${BASE_URL}/icons/camera.svg`} />
+              Fotos
+        </Link>
+
+        <Link href={`/`}>
+            <img src={`${BASE_URL}/icons/sun.svg`} />
+              Depoimentos
+        </Link>
+        <hr />
+
+        <Link href={`/`}>
+            <img src={`${BASE_URL}/icons/plus.svg`} />
+              GitHub Trends
+        </Link>
+
+        <Link href={`/login`}>
+            <img src={`${BASE_URL}//icons/logout.svg`} />
+              Sair
+        </Link>
     </AlurakutProfileSidebarMenuDefault.Wrapper>
   )
 }

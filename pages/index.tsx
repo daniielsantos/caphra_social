@@ -35,7 +35,7 @@ function ProfileSidebar(user: User) {
       </p>
       <hr />
 
-      <AlurakutProfileSidebarMenuDefault />
+      <AlurakutProfileSidebarMenuDefault username={user.githubUser}/>
 
     </Box>
   )
