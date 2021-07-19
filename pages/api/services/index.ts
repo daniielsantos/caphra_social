@@ -7,10 +7,10 @@ interface Comunidade {
 
 export default async function communitie(communitieName: any): Promise<Comunidade[]> {
   const com = communitieName.replaceAll("-", " ")
-  const result = await fetch('/api/comunidade', {
+  const result = await fetch('https://alurakut-nine-murex.vercel.app/api/comunidade', {
     method: "POST",
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify({ communitieName: com })
   })
