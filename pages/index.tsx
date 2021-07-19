@@ -99,13 +99,13 @@ const Home = (props: any) => {
   
   useEffect(() => {
 
-    // fetch(`https://api.github.com/users/${githubUser}/following`)
-    // .then((chunk) => {
-    //     return chunk.json()
-    // })
-    // .then((result) => {
-    //   setSeguidores(result)
-    // })
+    fetch(`https://api.github.com/users/${githubUser}/following`)
+    .then((chunk) => {
+        return chunk.json()
+    })
+    .then((result) => {
+      setSeguidores(result)
+    })
 
     //LISTAR COMUNIDADE
     fetch('/api/comunidades', {      
