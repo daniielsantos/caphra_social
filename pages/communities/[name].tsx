@@ -54,7 +54,7 @@ const Communitie = () => {
       })
     }
     
-  },[name])
+  },[comunidadeName, name])
 
   return (
     <>

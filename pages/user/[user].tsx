@@ -141,7 +141,7 @@ const User = (props: any) => {
       const comunidadesDato = response.data.allCommunities
       setComunidades(comunidadesDato)
     })
-  },[seguidores])
+  },[seguidores,usuario])
 
     
   return (
