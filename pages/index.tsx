@@ -7,7 +7,7 @@ import Box from '../src/components/Box'
 import { AlurakutMenu, AlurakutProfileSidebarMenuDefault, OrkutNostalgicIconSet } from '../src/lib/AluraCommons'
 import { ProfileRelationsBoxWrapper } from '../src/components/ProfileRelations'
 import Link from 'next/link'
-import { getCommunities } from './communities/service'
+import { getCommunities } from './api/service'
 
 
 const TOKEN = '20bdc200470d537286ea4281b283d1'

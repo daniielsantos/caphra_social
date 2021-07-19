@@ -8,7 +8,7 @@ import Box from '../../src/components/Box'
 import Link from "next/link"
 import { useEffect, useState } from "react"
 
-import {getCommunitie} from "./service"
+import {getCommunitie} from "../api/service"
 
 
 const TOKEN = '20bdc200470d537286ea4281b283d1'
