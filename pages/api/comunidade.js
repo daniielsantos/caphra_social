@@ -5,26 +5,22 @@ const databaseId  = '318d798fdeaa4082ae84f03d244d972b'
 
 export default async function recebedorDeRequest(req, res) {  
   
-  // if (req.method === 'POST'){
+  if (req.method === 'POST'){
     const notion = new Client({auth: TOKEN})
-    
-   
     const myPage = await notion.databases.query({
-      database_id: databaseId,
-      // filter: {
-      //   property: "title",
-      //   text: {
-      //     contains: "oi",
-      //   },
-      // },
+      database_id: databaseId,      
+      filter: {        
+        property: "title",   
+        text: {
+          equals: req.body.communitieName
+        },
+      },
     })    
     res.json({
       comunidades: myPage.results
     })
-
-    // return
-  // }
-  // res.status(404).json({
-  //   message: 'Ainda não temos dados no get'
-  // })
+  }
+  res.status(404).json({
+    message: 'Página não disponível'
+  })
 }

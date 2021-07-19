@@ -8,6 +8,8 @@ import Box from '../../src/components/Box'
 import Link from "next/link"
 import { useEffect, useState } from "react"
 
+import { api } from './services'
+
 const TOKEN = '20bdc200470d537286ea4281b283d1'
 const PROD_URL = 'https://alurakut-nine-murex.vercel.app'
 
@@ -68,45 +70,22 @@ function ProfileSidebar(community: any) {
 
 const Communitie = () => {
   const router = useRouter()
-  const { id } = router.query
-  const comunidadeId: string = id as string
+  const { name } = router.query
+  const comunidadeName: string = name as string
 
   const [comunidades, setComunidades] = useState<Comunidade>()
 
 
   useEffect(() =>{
-    
-    if (comunidadeId) {      
-      fetch('https://graphql.datocms.com/', {
-        method: 'POST',
-        headers: {
-          'Content-type': 'application/json',
-          'Accept': 'application/json',
-          'Authorization': `Bearer ${TOKEN}`,
-        },
-        //(filter: {title: { eq: "Heavy" }})
-        body: JSON.stringify({
-          query: `{ allCommunities (filter: {id: { eq: ${comunidadeId} }}) { 
-            title
-            id
-            imageUrl
-            creatorSlug
-          }}`
-        })
-        
-      })
-      .then((res) => res.json())
-      .then(async (response) => {
-        const comunidadesDato = await response.data.allCommunities
-        setComunidades(comunidadesDato[0])
-      })
-      .catch(error => console.log('bosta ',error))
-    }
-  },[comunidadeId])
+    const comunidade = api.communitie(comunidadeName)
+    comunidade.then(result => {
+      setComunidades(result[0])
+    })
+  },[comunidadeName])
 
   return (
     <>
-      <AlurakutMenu githubUser={comunidadeId}/>
+      <AlurakutMenu githubUser={comunidadeName}/>
       <MainGrid>
         <div className="profileArea" style={{gridArea: 'profileArea'}}> 
           { comunidades && <ProfileSidebar  community={comunidades}/>}

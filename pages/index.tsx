@@ -8,6 +8,8 @@ import { AlurakutMenu, AlurakutProfileSidebarMenuDefault, OrkutNostalgicIconSet 
 import { ProfileRelationsBoxWrapper } from '../src/components/ProfileRelations'
 import Link from 'next/link'
 
+
+
 const TOKEN = '20bdc200470d537286ea4281b283d1'
 const PROD_URL = 'https://alurakut-nine-murex.vercel.app'
 
@@ -19,6 +21,7 @@ interface Comunidade {
   id?: string
   title: string
   imageUrl: string
+  creatorSlug?: string
 }
 
 function ProfileSidebar(user: User) {  
@@ -95,37 +98,36 @@ const Home = (props: any) => {
 
   
   useEffect(() => {
-    
-    fetch(`https://api.github.com/users/${githubUser}/following`)
-    .then((chunk) => {
-        return chunk.json()
+
+    // fetch(`https://api.github.com/users/${githubUser}/following`)
+    // .then((chunk) => {
+    //     return chunk.json()
+    // })
+    // .then((result) => {
+    //   setSeguidores(result)
+    // })
+
+    //LISTAR COMUNIDADE
+    fetch('/api/comunidades', {      
+      headers: {
+        'Content-Type': 'application/json'
+      }      
     })
-    .then((result) => {
-      setSeguidores(result)
+    .then(async (res) => {                
+      const dados = await res.json()
+      
+      const comunitie: Comunidade[] = []
+      dados.comunidades.map((item: any) => {        
+        const obj: Comunidade = {
+          title: item.properties.title.title[0].plain_text ?? '',
+          imageUrl: item.properties.image_url.rich_text[0].plain_text ?? '',
+          creatorSlug: item.properties.creator_slug.rich_text[0].plain_text ?? ''
+        } 
+        comunitie.push(obj)             
+      })
+      setComunidades(comunitie)
     })
 
-    // API GaphQL
-    fetch('https://graphql.datocms.com/', {
-      method: 'POST',
-      headers: {
-        'Content-type': 'application/json',
-        'Accept': 'application/json',
-        'Authorization': `Bearer ${TOKEN}`,
-      },
-      body: JSON.stringify({
-        query: `{ allCommunities { 
-          title
-          id
-          imageUrl
-          creatorSlug
-        }}`
-      })
-    })
-    .then((res) => res.json())
-    .then((response) => {
-      const comunidadesDato = response.data.allCommunities
-      setComunidades(comunidadesDato)
-    })
   },[])
 
   return (
@@ -145,25 +147,31 @@ const Home = (props: any) => {
           <Box>
             <h2 className="subTitle">O que você deseja fazer ?</h2>
             <form onSubmit={function handlerCriarComunidade(e) {
-              e.preventDefault()
+              e.preventDefault()              
               const dadosDoForm = new FormData(e.currentTarget)
               const comunidade = {                
                 title: dadosDoForm.get('title') as string,
                 imageUrl: dadosDoForm.get('image') as string,
                 creatorSlug: githubUser
-              }
-              fetch('/api/comunidades', {
+              }              
+
+              fetch('/api/createCommunitie', {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(comunidade)
               })
-              .then(async (res) => {
+              .then(async (res) => {                
                 const dados = await res.json()
-                const comunidade = dados.registroCriado
-                setComunidades([...comunidades,comunidade])              
+                const comunitie: Comunidade = {
+                  title: dados.data.properties.title.title[0].plain_text,
+                  imageUrl: dados.data.properties.image_url.rich_text[0].plain_text,
+                  creatorSlug: dados.data.properties.creator_slug.rich_text[0].plain_text
+                }                
+                setComunidades([...comunidades,comunitie])              
               })
+
             }}>
               <div>
                 <input 
@@ -235,7 +243,7 @@ const Home = (props: any) => {
                 {comunidades.map((item: Comunidade, index: number) => {
                   return (                                      
                     index <= 5 && <li key={item.imageUrl}>                      
-                      <Link href={`/communities/${item.id}`}>
+                      <Link href={`/communities/${item.title.replaceAll(" ","-").trim()}`}>
                         <a>
                           <img 
                             src={item.imageUrl}
