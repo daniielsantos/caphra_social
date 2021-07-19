@@ -7,7 +7,7 @@ interface Comunidade {
 
 
 
-export default class CommunitieAPI {
+export class CommunitieAPI {
 
   constructor() {
 

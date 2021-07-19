@@ -8,7 +8,7 @@ import Box from '../../src/components/Box'
 import Link from "next/link"
 import { useEffect, useState } from "react"
 
-import CommunitieAPI from './services'
+import {CommunitieAPI} from './services'
 
 const TOKEN = '20bdc200470d537286ea4281b283d1'
 const PROD_URL = 'https://alurakut-nine-murex.vercel.app'
