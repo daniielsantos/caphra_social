@@ -21,7 +21,7 @@ export default async function receptor(req, res) {
       comunidades: myPage.results
     })
   }
-  res.status(404).json({
-    message: 'Página não disponível'
-  })
+  // res.status(404).json({
+  //   message: 'Página não disponível'
+  // })
 }

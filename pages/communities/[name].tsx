@@ -61,7 +61,7 @@ const Communitie = () => {
         .then(async (res) => {
           const dados = await res.json()
     
-          const com = dados.comunidades.map((item: any) => {
+          const com: Comunidade[] = dados.comunidades.map((item: any) => {
             const comunitie: Comunidade = {
               title: item.properties.title.title[0].plain_text ?? '',
               imageUrl: item.properties.image_url.rich_text[0].plain_text ?? '',
