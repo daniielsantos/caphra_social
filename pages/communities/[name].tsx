@@ -78,6 +78,7 @@ const Communitie = () => {
 
   useEffect(() =>{
     const api = new CommunitieAPI()
+    
     const comunidade =  api.communitie(comunidadeName)
     comunidade.then(result => {
       setComunidades(result[0])
