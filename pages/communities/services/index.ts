@@ -8,6 +8,9 @@ interface Comunidade {
 
 
 export default class CommunitieAPI {
+
+  constructor() { }
+
   async communitie(communitieName: string): Promise<Comunidade[]> {
     const com = communitieName.replaceAll("-", " ")
     const result = await fetch('/api/comunidade', {
