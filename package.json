@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@notionhq/client": "^0.2.2",
     "datocms-client": "^3.4.11",
     "jsonwebtoken": "^8.5.1",
     "next": "11.0.1",
