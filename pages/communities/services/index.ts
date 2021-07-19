@@ -13,7 +13,7 @@ export default class CommunitieAPI {
 
   }
 
-  async communitie(communitieName: string): Promise<Comunidade[]> {
+  communitie = async (communitieName: string): Promise<Comunidade[]> => {
     const com = communitieName.replaceAll("-", " ")
     const result = await fetch('/api/comunidade', {
       method: "POST",
