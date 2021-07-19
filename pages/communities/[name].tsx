@@ -8,7 +8,7 @@ import Box from '../../src/components/Box'
 import Link from "next/link"
 import { useEffect, useState } from "react"
 
-import {CommunitieAPI} from './services'
+import api from '../api/services'
 
 const TOKEN = '20bdc200470d537286ea4281b283d1'
 const PROD_URL = 'https://alurakut-nine-murex.vercel.app'
@@ -78,9 +78,8 @@ const Communitie = () => {
 
   useEffect(() =>{
     if (name) {
-      const api = new CommunitieAPI()
-  
-      const comunidade =  api.communitie(comunidadeName)
+      
+      const comunidade =  api(comunidadeName)
       comunidade.then(result => {
         setComunidades(result[0])
       })
