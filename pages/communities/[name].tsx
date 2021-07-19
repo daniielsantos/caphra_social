@@ -22,32 +22,6 @@ interface Comunidade {
   creatorSlug?: string
 }
 
-async function communitie(communitieName: any): Promise<Comunidade[]> {
-  const com = communitieName.replaceAll("-", " ")
-  const result = await fetch('/api/comunidade', {
-    method: "POST",
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({ communitieName: com })
-  })
-    .then(async (res) => {
-      const dados = await res.json()
-      return dados.comunidades
-    })
-    .catch(err => console.error('error api comunidade ', err))
-
-  return result.map((item: any) => {
-    const comunitie: Comunidade = {
-      title: item.properties.title.title[0].plain_text ?? '',
-      imageUrl: item.properties.image_url.rich_text[0].plain_text ?? '',
-      creatorSlug: item.properties.creator_slug.rich_text[0].plain_text ?? ''
-    }
-    return comunitie
-  })
-}
-
-
 function ProfileSidebar(community: any) { 
   return (
     <Box as="aside">          
@@ -74,11 +48,31 @@ const Communitie = () => {
 
 
   useEffect(() =>{
-    if (name) {      
-      const com =  communitie(comunidadeName)
-      com.then(result => {
-        setComunidades(result[0])
+    if (name) {
+      const com = comunidadeName.replaceAll("-", " ")
+
+      fetch('/api/comunidade', {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ communitieName: com })
       })
+        .then(async (res) => {
+          const dados = await res.json()
+    
+          const com = dados.comunidades.map((item: any) => {
+            const comunitie: Comunidade = {
+              title: item.properties.title.title[0].plain_text ?? '',
+              imageUrl: item.properties.image_url.rich_text[0].plain_text ?? '',
+              creatorSlug: item.properties.creator_slug.rich_text[0].plain_text ?? ''
+            }
+            return comunitie
+          })          
+          setComunidades(com[0])
+        })
+        .catch(err => console.error('error api comunidade ', err)) 
+
     }
     
   },[name])
