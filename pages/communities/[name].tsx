@@ -10,10 +10,6 @@ import { useEffect, useState } from "react"
 
 import {getCommunitie} from "../api/service"
 
-
-const TOKEN = '20bdc200470d537286ea4281b283d1'
-const PROD_URL = 'https://alurakut-nine-murex.vercel.app'
-
 interface User {
   githubUser: string
 }
