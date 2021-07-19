@@ -8,6 +8,9 @@ import Box from '../../src/components/Box'
 import Link from "next/link"
 import { useEffect, useState } from "react"
 
+import {getCommunitie} from "./service"
+
+
 const TOKEN = '20bdc200470d537286ea4281b283d1'
 const PROD_URL = 'https://alurakut-nine-murex.vercel.app'
 
@@ -49,30 +52,10 @@ const Communitie = () => {
 
   useEffect(() =>{
     if (name) {
-      const com = comunidadeName.replaceAll("-", " ")
-
-      fetch('/api/comunidade', {
-        method: "POST",
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ communitieName: com })
+      const dados = getCommunitie(comunidadeName)
+      dados.then(result => {
+        setComunidades(result)
       })
-        .then(async (res) => {
-          const dados = await res.json()
-    
-          const com: Comunidade[] = dados.comunidades.map((item: any) => {
-            const comunitie: Comunidade = {
-              title: item.properties.title.title[0].plain_text ?? '',
-              imageUrl: item.properties.image_url.rich_text[0].plain_text ?? '',
-              creatorSlug: item.properties.creator_slug.rich_text[0].plain_text ?? ''
-            }
-            return comunitie
-          })          
-          setComunidades(com[0])
-        })
-        .catch(err => console.error('error api comunidade ', err)) 
-
     }
     
   },[name])

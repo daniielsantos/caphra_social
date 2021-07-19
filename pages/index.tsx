@@ -7,7 +7,7 @@ import Box from '../src/components/Box'
 import { AlurakutMenu, AlurakutProfileSidebarMenuDefault, OrkutNostalgicIconSet } from '../src/lib/AluraCommons'
 import { ProfileRelationsBoxWrapper } from '../src/components/ProfileRelations'
 import Link from 'next/link'
-
+import { getCommunities } from './communities/service'
 
 
 const TOKEN = '20bdc200470d537286ea4281b283d1'
@@ -108,23 +108,9 @@ const Home = (props: any) => {
     })
 
     //LISTAR COMUNIDADE
-    fetch('/api/comunidades', {      
-      headers: {
-        'Content-Type': 'application/json'
-      }      
-    })
-    .then(async (res) => {                
-      const dados = await res.json()      
-      const comunitie: Comunidade[] = []
-      dados.comunidades.map((item: any) => {        
-        const obj: Comunidade = {
-          title: item.properties.title.title[0].plain_text ?? '',
-          imageUrl: item.properties.image_url.rich_text[0].plain_text ?? '',
-          creatorSlug: item.properties.creator_slug.rich_text[0].plain_text ?? ''
-        } 
-        comunitie.push(obj)             
-      })
-      setComunidades(comunitie)
+    const comunitie = getCommunities()
+    comunitie.then(result => {
+      setComunidades(result)
     })
 
   },[])
