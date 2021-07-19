@@ -7,7 +7,7 @@ interface Comunidade {
   creatorSlug?: string
 }
 
-export const api = {
+const api = {
 
   communitie: async (communitieName: string): Promise<Comunidade[]> => {
     const com = communitieName.replaceAll("-", " ")
@@ -34,5 +34,5 @@ export const api = {
   }
 }
 
-
+export default api
 
