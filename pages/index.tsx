@@ -114,8 +114,7 @@ const Home = (props: any) => {
       }      
     })
     .then(async (res) => {                
-      const dados = await res.json()
-      
+      const dados = await res.json()      
       const comunitie: Comunidade[] = []
       dados.comunidades.map((item: any) => {        
         const obj: Comunidade = {

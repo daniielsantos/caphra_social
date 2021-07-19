@@ -17,7 +17,8 @@ export default async function recebedorDeRequest(req, res) {
       //     contains: "oi",
       //   },
       // },
-    })    
+    })
+    // console.log('result ', results)    
     res.json({
       comunidades: myPage.results
     })

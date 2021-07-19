@@ -35,6 +35,7 @@ async function communitie(communitieName: any): Promise<Comunidade[]> {
       const dados = await res.json()
       return dados.comunidades
     })
+    .catch(err => console.error('error api comunidade ', err))
 
   return result.map((item: any) => {
     const comunitie: Comunidade = {
@@ -46,34 +47,6 @@ async function communitie(communitieName: any): Promise<Comunidade[]> {
   })
 }
 
-
-
-function ProfileRealationBox(props: any) {
-  return (
-    <ProfileRelationsBoxWrapper>
-    <h2 className="smallTitle">
-        {props.title} ({props.items.length})
-    </h2>
-    <ul>            
-          {props.items && props.items.map((item: any, index: number) => {
-            return (                                      
-              index <= 5 && <li key={item.id}>
-                <Link href={`${item.login}`}>  
-                  <a>
-                    <img 
-                      src={item.avatar_url}
-                      alt={item.login}                          
-                      />
-                    <span>{item.login}</span>
-                  </a>              
-                </Link>                
-              </li>
-            )
-          })}
-      </ul>
-    </ProfileRelationsBoxWrapper>
-  )
-}
 
 function ProfileSidebar(community: any) { 
   return (
