@@ -194,7 +194,7 @@ const User = (props: any) => {
                 {comunidades.map((item: Comunidade, index: number) => {
                   return (                                      
                     index <= 5 && <li key={item.imageUrl}>
-                        <Link href={`/communities/${item.id}`}>
+                        <Link href={`/communities/${item.title.replaceAll(" ","-").trim()}`}>
                           <a>
                             <img 
                               src={item.imageUrl}
