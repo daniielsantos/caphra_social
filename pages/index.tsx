@@ -100,11 +100,9 @@ const Home = (props: any) => {
   useEffect(() => {
 
     fetch(`https://api.github.com/users/${githubUser}/following`)
-    .then((chunk) => {
-        return chunk.json()
-    })
-    .then((result) => {
-      setSeguidores(result)
+    .then(async (chunk) => {
+        const res = await chunk.json()
+        setSeguidores(res)
     })
 
     //LISTAR COMUNIDADE
@@ -113,7 +111,7 @@ const Home = (props: any) => {
       setComunidades(result)
     })
 
-  },[])
+  },[githubUser])
 
   return (
     <>

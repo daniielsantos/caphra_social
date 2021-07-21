@@ -10,6 +10,8 @@ import MainGrid from '../../src/components/MainGrid'
 import Box from '../../src/components/Box'
 import Link from "next/link"
 
+import { getCommunities } from '../api/service'
+
 
 const TOKEN = '20bdc200470d537286ea4281b283d1'
 const PROD_URL = 'https://alurakut-nine-murex.vercel.app'
@@ -88,10 +90,7 @@ const User = (props: any) => {
   const router = useRouter()
   const { user } = router.query
 
-  const usuario: User = {
-    githubUser: user as string
-  }
-
+  const usuario = user as string 
 
   const [ userName, setUsername ] = useState('')
   const [seguidores, setSeguidores] = useState([])
@@ -99,7 +98,7 @@ const User = (props: any) => {
 
   useEffect(() => {
     // AMIGOS
-    fetch(`https://api.github.com/users/${usuario.githubUser}/following`)
+    fetch(`https://api.github.com/users/${usuario}/following`)
     .then((chunk) => {
         return chunk.json()
     })
@@ -109,7 +108,7 @@ const User = (props: any) => {
     .catch(error => console.log('error ', error))
 
     // GET USERNAME
-    fetch(`https://api.github.com/users/${usuario.githubUser}`, {
+    fetch(`https://api.github.com/users/${usuario}`, {
       headers: {
         'Content-Type': 'application/json'
       }
@@ -119,38 +118,21 @@ const User = (props: any) => {
       setUsername(dados.name)
     })
 
-    // COMUNIDADES
-    fetch('https://graphql.datocms.com/', {
-      method: 'POST',
-      headers: {
-        'Content-type': 'application/json',
-        'Accept': 'application/json',
-        'Authorization': `Bearer ${TOKEN}`,
-      },
-      body: JSON.stringify({
-        query: `{ allCommunities { 
-          title
-          id
-          imageUrl
-          creatorSlug
-        }}`
-      })
+    // COMUNIDADES    
+    const commu = getCommunities()
+    commu.then(result => {
+      setComunidades(result)
     })
-    .then((res) => res.json())
-    .then((response) => {
-      const comunidadesDato = response.data.allCommunities
-      setComunidades(comunidadesDato)
-    })
-  },[seguidores,usuario])
+  },[usuario])
 
     
   return (
     <>
-      <AlurakutMenu githubUser={usuario.githubUser}/>
+      <AlurakutMenu githubUser={usuario}/>
       
       <MainGrid>
         <div className="profileArea" style={{gridArea: 'profileArea'}}> 
-          <ProfileSidebar githubUser={usuario.githubUser}/>
+          <ProfileSidebar githubUser={usuario}/>
         </div>
 
         <div className="welcomeArea" style={{gridArea: 'welcomeArea'}}>
@@ -169,7 +151,7 @@ const User = (props: any) => {
               console.log('dados form ', dadosForm.get('mensagem'))
               const mensagem = {
                 from_username: mainUser,
-                to_username: usuario.githubUser,
+                to_username: usuario,
                 message: dadosForm.get('mensagem'),
                 sent_date: new Date().toLocaleTimeString('pt-BR')
               }
