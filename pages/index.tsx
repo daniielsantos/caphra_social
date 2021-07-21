@@ -202,13 +202,13 @@ const Home = (props: any) => {
             }}>
               {/* <input type="text" name="nome" placeholder="Digite seu nome" required/> */}
               <input type="text" name="mensagem" placeholder="Digite uma mensagem" required/>
-              Para: <select name="users" key='9128'>
+              {/* Para: <select name="users" key='9128'>
               {pessoasFavoritas.map((item, index) => {
                 return (
                   <option value={item} key={new Date().toISOString()+index}>{item}</option>
                   )
                 })}
-                </select>
+                </select> */}
                 
                 <br/>
                 <br/>
